@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Índice de Aplicaciones - Proyecto Equipo 4</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        button, a {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            color: blue;
+        }
+        .app-container {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function mostrarAplicacion(app) {
+            // Ocultar todas las aplicaciones
+            var apps = document.getElementsByClassName("app-container");
+            for (var i = 0; i < apps.length; i++) {
+                apps[i].style.display = "none";
+            }
+            // Mostrar la aplicación seleccionada
+            document.getElementById(app).style.display = "block";
+        }
+
+        // Funciones para cada aplicación
+        function calcularDescuento() {
+            var cantidadComprada = parseInt(document.getElementById("cantidad").value);
+            var precioUnitario = parseFloat(document.getElementById("precio").value);
+            if (isNaN(cantidadComprada) || isNaN(precioUnitario) || cantidadComprada <= 0 || precioUnitario <= 0) {
+                alert("Por favor, ingrese valores válidos.");
+                return;
+            }
+            var descuento = 0;
+            if (cantidadComprada >= 1000) {
+                descuento = 0.25; // 25% de descuento
+            }
+            var precioTotal = cantidadComprada * precioUnitario;
+            var precioConDescuento = precioTotal - (precioTotal * descuento);
+            document.getElementById("resultado").innerHTML = "El precio total con descuento es: $" + precioConDescuento.toFixed(2);
+        }
+
+        function calcularPropina() {
+            var montoTotal = parseFloat(document.getElementById("montoTotal").value);
+            var porcentajePropina = parseFloat(document.getElementById("porcentajePropina").value);
+            if (isNaN(montoTotal) || isNaN(porcentajePropina) || montoTotal <= 0 || porcentajePropina <= 0) {
+                alert("Por favor, ingrese valores válidos.");
+                return;
+            }
+            var propina = (montoTotal * porcentajePropina) / 100;
+            var totalConPropina = montoTotal + propina;
+            var totalRedondeado = totalConPropina.toFixed(2);
+            document.getElementById("resultado").innerHTML = `
+                <p>Monto total: $${montoTotal.toFixed(2)}</p>
+                <p>Propina (${porcentajePropina}%): $${propina.toFixed(2)}</p>
+                <p>Total con propina: $${totalConPropina.toFixed(2)}</p>
+                <p><strong>Total redondeado: $${totalRedondeado}</strong></p>
+            `;
+        }
+
+        function calcularImpuesto() {
+            const precio = parseFloat(document.getElementById("precioImpuesto").value);
+            const tasaImpuesto = parseFloat(document.getElementById("tasaImpuesto").value);
+            if (isNaN(precio) || isNaN(tasaImpuesto) || precio <= 0 || tasaImpuesto < 0) {
+                alert("Por favor, ingresa valores válidos.");
+                return;
+            }
+            const impuesto = precio * (tasaImpuesto / 100);
+            const totalConImpuesto = precio + impuesto;
+            const resultadoDiv = document.getElementById("resultadoImpuesto");
+            resultadoDiv.innerHTML = `
+            <p><strong>Precio del Producto:</strong> $${precio.toFixed(2)}</p>
+            <p><strong>Impuesto Aplicado:</strong> $${impuesto.toFixed(2)}</p>
+            <p><strong>Total con Impuesto:</strong> $${totalConImpuesto.toFixed(2)}</p>
+            `;
+        }
+
+        function calcularArea() {
+            var lado = parseFloat(document.getElementById('lado').value);
+            var area = lado * lado;
+            document.getElementById('resultadoarea').innerHTML = 'El área del cuadrado es: ' + area.toFixed(2) + ' unidades cuadradas';
+        }
+
+        function calcularVolumen() {
+            var largo = parseFloat(document.getElementById('largo').value);
+            var ancho = parseFloat(document.getElementById('ancho').value);
+            var altura = parseFloat(document.getElementById('altura').value);
+            var volumen = largo * ancho * altura;
+            document.getElementById('resultadovolumen').innerHTML = 'El volumen del rectángulo es: ' + volumen.toFixed(2) + ' unidades cúbicas';
+        }
+
+        function sumar() {
+            var num1 = parseFloat(document.getElementById('numero1').value);
+            var num2 = parseFloat(document.getElementById('numero2').value);
+            var resultado = num1 + num2;
+            document.getElementById('resultadosuma').innerHTML = 'Resultado: ' + resultado;
+        }
+
+        function calcularCuadrado() {
+            var numero = parseFloat(document.getElementById('numero').value);
+            var cuadrado = numero * numero;
+            document.getElementById('resultadocuadrado').innerHTML = 'El cuadrado de ' + numero + ' es: ' + cuadrado;
+        }
+
+        function calcularFactorial() {
+            var numero = parseInt(document.getElementById('numerofactorial').value);
+            if (numero < 0) {
+                document.getElementById('resultadofactorial').innerHTML = 'El factorial no está definido para números negativos.';
+                return;
+            }
+            var factorial = 1;
+            for (var i = 1; i <= numero; i++) {
+                factorial *= i;
+            }
+            document.getElementById('resultadofactorial').innerHTML = 'El factorial de ' + numero + ' es: ' + factorial;
+        }
+
+        function mostrarPares() {
+            var numero = parseInt(document.getElementById('numeropares').value);
+            if (numero <= 0) {
+                document.getElementById('resultadopares').innerHTML = 'Por favor, ingresa un número mayor que 0.';
+                return;
+            }
+            var pares = [];
+            for (var i = 2; i <= numero; i += 2) {
+                pares.push(i);
+            }
+            document.getElementById('resultadopares').innerHTML = 'Números pares hasta ' + numero + ': ' + pares.join(', ');
+        }
+
+        function calcularPromedio() {
+            var calificacion1 = parseFloat(document.getElementById('calificacion1').value);
+            var calificacion2 = parseFloat(document.getElementById('calificacion2').value);
+            var calificacion3 = parseFloat(document.getElementById('calificacion3').value);
+            var calificacion4 = parseFloat(document.getElementById('calificacion4').value);
+            var calificacion5 = parseFloat(document.getElementById('calificacion5').value);
+
+            var promedio = (calificacion1 + calificacion2 + calificacion3 + calificacion4 + calificacion5) / 5;
+            document.getElementById('resultadopromedio').innerHTML = 'El promedio es: ' + promedio.toFixed(2);
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Índice de Aplicaciones - Proyecto Equipo 4</h1>
+    <h2>Selecciona una aplicación:</h2>
+    <ul>
+        <li><button onclick="mostrarAplicacion('descuentos')">Algoritmo 1: Descuentos por Volumen de Compra</button></li>
+        <li><button onclick="mostrarAplicacion('propinas')">Algoritmo 2: Cálculo de Propinas</button></li>
+        <li><button onclick="mostrarAplicacion('impuestos')">Algoritmo 3: Cálculo de Impuestos</button></li>
+        <li><button onclick="mostrarAplicacion('area')">Algoritmo 4: Cálculo del Área de un Cuadrado</button></li>
+        <li><button onclick="mostrarAplicacion('volumen')">Algoritmo 5: Cálculo del Volumen de un Rectángulo</button></li>
+        <li><button onclick="mostrarAplicacion('suma')">Algoritmo 6: Suma de Dos Números</button></li>
+        <li><button onclick="mostrarAplicacion('cuadrados')">Algoritmo 7: Cálculo del Cuadrado de un Número</button></li>
+        <li><button onclick="mostrarAplicacion('factorial')">Algoritmo 8: Cálculo del Factorial de un Número</button></li>
+        <li><button onclick="mostrarAplicacion('pares')">Algoritmo 9: Números Pares en una Sucesión</button></li>
+        <li><button onclick="mostrarAplicacion('promedio')">Algoritmo 10: Cálculo del Promedio de 5 Calificaciones</button></li>
+    </ul>
+    
+        <div id="descuentos" class="app-container">
+            <h2>Aplicación de Descuentos por Volumen de Compra</h2>
+            <label for="cantidad">Cantidad de productos:</label>
+            <input type="number" id="cantidad" placeholder="Ingrese la cantidad de productos"><br><br>
+            
+            <label for="precio">Precio unitario:</label>
+            <input type="number" id="precio" placeholder="Ingrese el precio unitario del producto" step="0.01"><br><br>
+            
+            <button onclick="calcularDescuento()">Calcular Descuento</button>
+            <h2 id="resultado"></h2>
+        </div>
+    
+        <div id="propinas" class="app-container">
+            <h2>Cálculo Automático de Propinas y Redondeo</h2>
+            <label for="montoTotal">Monto total de la cuenta:</label>
+            <input type="number" id="montoTotal" placeholder="Ingrese el monto total" step="0.01" min="0"><br><br>
+    
+            <label for="porcentajePropina">Porcentaje de propina:</label>
+            <input type="number" id="porcentajePropina" placeholder="Ingrese el porcentaje de propina" step="0.1" min="0"><br><br>
+    
+            <button onclick="calcularPropina()">Calcular Propina</button>
+            <div id="resultado" class="result"></div>
+        </div>
+    
+        <div id="impuestos" class="app-container">
+            <h2>Cálculo de Impuestos</h2>
+            <label for="precioImpuesto">Precio del Producto:</label>
+            <input type="number" id="precioImpuesto" placeholder="Ingresa el precio" required>
+    
+            <label for="tasaImpuesto">Tasa de Impuesto (%):</label>
+            <input type="number" id="tasaImpuesto" placeholder="Ingresa la tasa de impuesto" required>
+    
+            <button onclick="calcularImpuesto()">Calcular</button>
+            <div id="resultadoImpuesto"></div>
+        </div>
+    
+        <div id="area" class="app-container">
+            <h2>Cálculo del área de un cuadrado</h2>
+            <label for="lado">Lado del cuadrado:</label>
+            <input type="number" id="lado" step="0.1" required><br><br>
+            <button onclick="calcularArea()">Calcular Área</button>
+            <p id="resultadoarea"></p>
+        </div>
+    
+        <div id="volumen" class="app-container">
+            <h2>Cálculo del volumen de un rectángulo</h2>
+            <label for="largo">Largo:</label>
+            <input type="number" id="largo" step="0.1" required><br><br>
+            
+            <label for="ancho">Ancho:</label>
+            <input type="number" id="ancho" step="0.1" required><br><br>
+            
+            <label for="altura">Altura:</label>
+            <input type="number" id="altura" step="0.1" required><br><br>
+            
+            <button onclick="calcularVolumen()">Calcular Volumen</button>
+            <p id="resultadovolumen"></p>
+        </div>
+    
+        <div id="suma" class="app-container">
+            <h2>Suma de dos números</h2>
+            
+            <label for="numero1">Número 1:</label>
+            <input type="number" id="numero1" required><br><br>
+            
+            <label for="numero2">Número 2:</label>
+            <input type="number" id="numero2" required><br><br>
+            
+            <button onclick="sumar()">Sumar</button>
+            <p id="resultadosuma"></p>
+        </div>
+    
+        <div id="cuadrados" class="app-container">
+            <h2>Cálculo del cuadrado de un número</h2>
+            
+            <label for="numero">Ingresa un número:</label>
+            <input type="number" id="numero" required><br><br>
+            
+            <button onclick="calcularCuadrado()">Calcular</button>
+            <p id="resultadocuadrado"></p>
+        </div>
+    
+        <div id="factorial" class="app-container">
+            <h2>Cálculo del factorial de un número</h2>
+            
+            <label for="numerofactorial">Número:</label>
+            <input type="number" id="numerofactorial" required><br><br>
+            
+            <button onclick="calcularFactorial()">Calcular Factorial</button>
+            <p id="resultadofactorial"></p>
+        </div>
+         
+        <div id="pares" class="app-container">
+            <h2>Números pares en una sucesión</h2>
+            
+            <label for="numeropares">Ingresa un número:</label>
+            <input type="number" id="numeropares" required><br><br>
+            
+            <button onclick="mostrarPares()">Mostrar Números Pares</button>
+            <p id="resultadopares"></p>
+        </div>
+    
+        <div id="promedio" class="app-container">
+            <h2>Cálculo del promedio de 5 calificaciones</h2>
+    
+            <label for="calificacion1">Calificación 1:</label>
+            <input type="number" id="calificacion1" step="0.1" required><br><br>
+        
+            <label for="calificacion2">Calificación 2:</label>
+            <input type="number" id="calificacion2" step="0.1" required><br><br>
+        
+            <label for="calificacion3">Calificación 3:</label>
+            <input type="number" id="calificacion3" step="0.1" required><br><br>
+        
+            <label for="calificacion4">Calificación 4:</label>
+            <input type="number" id="calificacion4" step="0.1" required><br><br>
+        
+            <label for="calificacion5">Calificación 5:</label>
+            <input type="number" id="calificacion5" step="0.1" required><br><br>
+        
+            <button onclick="calcularPromedio()">Calcular Promedio</button>
+        
+            <p id="resultadopromedio"></p>
+        </div>
+    
+        <h5>Integrantes equipo 4:</h5>
+        <ul>
+            <li>Decena Gonzales Katia Cristel</li>
+            <li>Domínguez Casas Gabino</li>
+            <li>Fernández Romagnoli Karlo</li>
+            <li>Galindo Ruiz Gerardo</li>
+            <li>García Pérez Salvador</li>
+        </ul>
+    </body>
+    </html>
